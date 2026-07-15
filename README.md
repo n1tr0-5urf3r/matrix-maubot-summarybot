@@ -38,9 +38,19 @@ Configuration is edited through the maubot admin UI (or the instance's client co
 | `temperature`   | Sampling temperature.                                              | `0.5`                             |
 | `system_prompt` | Instruction prepended as the `system` message.                     | Concise summary prompt (see below) |
 
-The shipped `system_prompt` asks for a concise, structured summary highlighting the main topics and decisions (with a slightly cynical tone). Replace it with whatever style/language you prefer.
+The shipped `system_prompt` asks for a concise, structured summary highlighting the main topics and decisions. Replace it with whatever style/language you prefer.
 
 You **must** set `api_url` and `api_key` before the plugin will work.
+
+### `api_url` examples
+
+`api_url` is the full chat-completions endpoint, i.e. the provider's base URL plus `/chat/completions`. For a provider whose base URL is `https://chat-ai.academiccloud.de/v1`:
+
+```yaml
+api_url: https://chat-ai.academiccloud.de/v1/chat/completions
+```
+
+The same pattern applies to any OpenAI-compatible provider — take its base URL and append `/chat/completions`.
 
 ### Request shape
 

@@ -13,4 +13,4 @@ temperature: 0.5
 # Instruction prepended as the system message.
 system_prompt: >-
   Summarize the following Matrix chat history concisely and in a structured way.
-  Name the most important topics and decisions. Be slightly cynical.
+  Name the most important topics and decisions.
