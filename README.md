@@ -1,6 +1,6 @@
 # Summarybot
 
-A [maubot](https://github.com/maubot/maubot) plugin that summarizes recent messages in a Matrix room using an LLM. Point it at any OpenAI-compatible chat-completions endpoint — for example the same LLM backend you already serve through [baibot](https://github.com/etkecc/baibot), a self-hosted vLLM/Ollama/LM Studio server, or a hosted API — and it will condense the last _N_ messages of a room into a short, structured summary on demand.
+A [maubot](https://github.com/maubot/maubot) plugin that summarizes recent messages in a Matrix room using an LLM. Point it at any OpenAI-compatible chat-completions endpoint, a self-hosted vLLM/Ollama/LM Studio server, or a hosted API and it will condense the last _N_ messages of a room into a short, structured summary on demand.
 
 ## What it does
 
@@ -28,14 +28,14 @@ Example:
 
 Configuration is edited through the maubot admin UI (or the instance's client config). The defaults live in [`base-config.yaml`](base-config.yaml):
 
-| Key             | Description                                                        | Default                           |
-| --------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `api_url`       | Full URL of the OpenAI-compatible `chat/completions` endpoint.     | `CHANGEME`                        |
-| `api_key`       | Bearer token sent as `Authorization: Bearer <api_key>`.            | `CHANGEME`                        |
-| `model`         | Model name passed to the API.                                      | `qwen3-30b-a3b-instruct-2507`     |
-| `max_messages`  | Hard upper bound on how many messages are ever fetched/summarized. | `200`                             |
-| `max_tokens`    | Max tokens requested from the LLM for the summary.                 | `1000`                            |
-| `temperature`   | Sampling temperature.                                              | `0.5`                             |
+| Key             | Description                                                        | Default                            |
+| --------------- | ------------------------------------------------------------------ | ---------------------------------- |
+| `api_url`       | Full URL of the OpenAI-compatible `chat/completions` endpoint.     | `CHANGEME`                         |
+| `api_key`       | Bearer token sent as `Authorization: Bearer <api_key>`.            | `CHANGEME`                         |
+| `model`         | Model name passed to the API.                                      | `qwen3-30b-a3b-instruct-2507`      |
+| `max_messages`  | Hard upper bound on how many messages are ever fetched/summarized. | `200`                              |
+| `max_tokens`    | Max tokens requested from the LLM for the summary.                 | `1000`                             |
+| `temperature`   | Sampling temperature.                                              | `0.5`                              |
 | `system_prompt` | Instruction prepended as the `system` message.                     | Concise summary prompt (see below) |
 
 The shipped `system_prompt` asks for a concise, structured summary highlighting the main topics and decisions. Replace it with whatever style/language you prefer.
