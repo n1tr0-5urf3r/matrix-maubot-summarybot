@@ -1,0 +1,16 @@
+# Full URL of an OpenAI-compatible chat/completions endpoint.
+api_url: CHANGEME
+# Bearer token sent as `Authorization: Bearer <api_key>`.
+api_key: CHANGEME
+# Model name passed to the API.
+model: qwen3-30b-a3b-instruct-2507
+# Hard upper bound on how many messages are ever fetched/summarized.
+max_messages: 200
+# Max tokens requested from the LLM for the summary.
+max_tokens: 1000
+# Sampling temperature.
+temperature: 0.5
+# Instruction prepended as the system message.
+system_prompt: >-
+  Summarize the following Matrix chat history concisely and in a structured way.
+  Name the most important topics and decisions. Be slightly cynical.

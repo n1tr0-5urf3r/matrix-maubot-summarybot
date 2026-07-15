@@ -1,0 +1,10 @@
+maubot: 0.1.0
+id: de.kn.summarybot
+version: 1.0.2
+license: MIT
+modules:
+  - summarybot
+main_class: SummaryBot
+extra_files:
+  - base-config.yaml
+config: true

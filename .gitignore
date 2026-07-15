@@ -1,0 +1,9 @@
+# Built maubot plugin packages (reproducible via `mbc build` / CI)
+*.mbp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
