@@ -1,6 +1,6 @@
 maubot: 0.1.0
 id: de.kn.summarybot
-version: 1.0.2
+version: 1.0.3
 license: MIT
 modules:
   - summarybot
