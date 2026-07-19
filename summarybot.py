@@ -60,6 +60,8 @@ class SummaryBot(Plugin):
             return
 
         await evt.mark_read()
+        # Show a typing indicator while the LLM works; cleared in the finally below.
+        await self.client.set_typing(evt.room_id, timeout=120_000)
 
         # 3. Ship to the LLM
         payload = {
@@ -74,25 +76,28 @@ class SummaryBot(Plugin):
         headers = {"Authorization": f"Bearer {self.config['api_key']}"}
 
         try:
-            async with self.http.post(self.config["api_url"], json=payload,
-                                      headers=headers, timeout=REQUEST_TIMEOUT) as r:
-                if r.status != 200:
-                    body = (await r.text())[:200]
-                    self.log.warning(f"LLM API returned {r.status}: {body}")
-                    await evt.reply(f"API error {r.status}: {body}")
-                    return
-                data = await r.json()
-        except ClientError as e:
-            self.log.exception("LLM request failed")
-            await evt.reply(f"Request failed: {e}")
-            return
+            try:
+                async with self.http.post(self.config["api_url"], json=payload,
+                                          headers=headers, timeout=REQUEST_TIMEOUT) as r:
+                    if r.status != 200:
+                        body = (await r.text())[:200]
+                        self.log.warning(f"LLM API returned {r.status}: {body}")
+                        await evt.reply(f"API error {r.status}: {body}")
+                        return
+                    data = await r.json()
+            except ClientError as e:
+                self.log.exception("LLM request failed")
+                await evt.reply(f"Request failed: {e}")
+                return
 
-        try:
-            text = data["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError):
-            self.log.warning(f"Unexpected LLM response shape: {data!r:.500}")
-            await evt.reply("Got an unexpected response from the LLM.")
-            return
+            try:
+                text = data["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError):
+                self.log.warning(f"Unexpected LLM response shape: {data!r:.500}")
+                await evt.reply("Got an unexpected response from the LLM.")
+                return
 
-        await evt.reply(f"**Summary of the last {len(lines)} messages:**\n\n{text}",
-                        markdown=True)
+            await evt.reply(f"**Summary of the last {len(lines)} messages:**\n\n{text}",
+                            markdown=True)
+        finally:
+            await self.client.set_typing(evt.room_id, timeout=0)
